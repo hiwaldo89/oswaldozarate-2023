@@ -1,81 +1,64 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import { SiLinkedin, SiGithub } from "react-icons/si";
+import { getCollection } from "astro:content";
+
+import Layout from "../layouts/Layout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { skills } from "../data";
+
+const projects = await getCollection("projects");
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
+<Layout title="Oswaldo Zarate | Frontend Engineer">
+  <main>
+    <div class="container mx-auto px-4 pt-20 text-gray-200">
+      <h1 class="text-4xl mb-7">
+        Oswaldo Zárate <span class="block">Frontend Engineer</span>
+      </h1>
+      <p class="md:max-xl:w-2/3 xl:w-1/2">
+        I'm a Frotend Egineer with over 8 years of experience building user
+        interfaces for websites and web applications. I have worked with clients
+        from a variety of industries, ranging from small agencies to large
+        corporations.
+      </p>
+      <ul class="mt-7 mb-16 text-2xl flex">
+        <li class="mr-4">
+          <a
+            href="https://www.linkedin.com/in/oswaldo-zarate-frontend/"
+            target="_blank"
+          >
+            <SiLinkedin />
+            <span class="sr-only">LinkedIn</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/hiwaldo89" target="_blank">
+            <SiGithub />
+            <span class="sr-only">GitHub</span>
+          </a>
+        </li>
+      </ul>
+      <h2 class="text-2xl mb-6">Tech Stack</h2>
+      <ul class="text-xl flex flex-wrap">
+        {
+          skills.map(({ icon: Icon, title }) => (
+            <li class="mr-4 mb-4 relative group">
+              <Icon />
+              <span class="absolute invisible group-hover:visible w-32 bg-black text-white text-center py-1 text-xs rounded-md z-10 top-full left-1/2 -ml-[60px]">
+                {title}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+      <section class="mt-20">
+        <h2 class="text-2xl mb-8">My Projects</h2>
+        {
+          projects.map((project) => (
+            <ProjectCard {...project.data} description={project.body} />
+          ))
+        }
+      </section>
+    </div>
+  </main>
 </Layout>
-
-<style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
-</style>
