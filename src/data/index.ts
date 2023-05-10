@@ -9,7 +9,7 @@ import {
   SiSass,
   SiTypescript,
   SiNextdotjs,
-} from "react-icons/si";
+} from "react-icons/si/index.js";
 
 export const skills = [
   {
